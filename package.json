@@ -1,0 +1,35 @@
+{
+  "name": "wanted_pre_onboarding",
+  "version": "1.0.0",
+  "description": "wanted_pre_onboarding",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/azure928/wanted_pre_onboarding.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/azure928/wanted_pre_onboarding/issues"
+  },
+  "homepage": "https://github.com/azure928/wanted_pre_onboarding#readme",
+  "devDependencies": {
+    "eslint": "^8.22.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "nodemon": "^2.0.19",
+    "prettier": "^2.7.1"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "http": "^0.0.1-security",
+    "morgan": "^1.10.0"
+  }
+}
