@@ -42,4 +42,12 @@ const updateJobPosting = async (
   );
 };
 
-module.exports = { createJobPosting, updateJobPosting };
+const deleteJobPosting = async job_posting_id => {
+  return await JobPosting.destroy({
+    where: {
+      id: job_posting_id,
+    },
+  });
+};
+
+module.exports = { createJobPosting, updateJobPosting, deleteJobPosting };
