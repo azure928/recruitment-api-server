@@ -20,4 +20,26 @@ const createJobPosting = async (
   });
 };
 
-module.exports = { createJobPosting };
+const updateJobPosting = async (
+  job_posting_id,
+  position,
+  compensation,
+  content,
+  skill
+) => {
+  return await JobPosting.update(
+    {
+      position: position,
+      compensation: compensation,
+      content: content,
+      skill: skill,
+    },
+    {
+      where: {
+        id: job_posting_id,
+      },
+    }
+  );
+};
+
+module.exports = { createJobPosting, updateJobPosting };
