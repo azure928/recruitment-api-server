@@ -44,4 +44,20 @@ const updateJobPosting = async (req, res) => {
   }
 };
 
-module.exports = { createJobPosting, updateJobPosting };
+const deleteJobPosting = async (req, res) => {
+  try {
+    const job_posting_id = req.params.job_posting_id;
+    console.log('req.prams 확인 : ', req.prams);
+
+    const result = await jobRepo.deleteJobPosting(job_posting_id);
+
+    console.log('result : ', result);
+
+    res.status(200).json({ message: 'SUCCESS' });
+  } catch (error) {
+    console.log(error.message);
+    res.status(error.statusCode || 500).json({ message: 'FAIL' });
+  }
+};
+
+module.exports = { createJobPosting, updateJobPosting, deleteJobPosting };
