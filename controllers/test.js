@@ -1,4 +1,4 @@
-export const test = async (req, res) => {
+const test = async (req, res) => {
   try {
     console.log('test working');
 
@@ -7,3 +7,5 @@ export const test = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+module.exports = { test };
