@@ -8,5 +8,7 @@ router.post('/jobpostings', jobServices.createJobPosting);
 router.put('/jobpostings/:job_posting_id', jobServices.updateJobPosting);
 // 채용공고 삭제
 router.delete('/jobpostings/:job_posting_id', jobServices.deleteJobPosting);
+// 채용공고 목록
+router.get('/jobpostings', jobServices.readJobPostings);
 
 module.exports = router;

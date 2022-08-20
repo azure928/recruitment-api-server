@@ -60,4 +60,22 @@ const deleteJobPosting = async (req, res) => {
   }
 };
 
-module.exports = { createJobPosting, updateJobPosting, deleteJobPosting };
+const readJobPostings = async (req, res) => {
+  try {
+    const data = await jobRepo.readJobPostings();
+
+    //console.log('data : ', data);
+
+    res.status(200).json(data);
+  } catch (error) {
+    console.log(error.message);
+    res.status(error.statusCode || 500).json({ message: 'FAIL' });
+  }
+};
+
+module.exports = {
+  createJobPosting,
+  updateJobPosting,
+  deleteJobPosting,
+  readJobPostings,
+};
