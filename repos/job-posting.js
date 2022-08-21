@@ -53,7 +53,28 @@ const deleteJobPosting = async job_posting_id => {
   });
 };
 
-const readJobPostings = async keyword => {
+async function readJobPostings() {
+  //console.log('검색 키워드 없음 확인');
+  return await JobPosting.findAll({
+    attributes: [
+      ['id', '채용공고_id'],
+      [Sequelize.col('company.company_name'), '회사명'],
+      [Sequelize.col('company.country'), '국가'],
+      [Sequelize.col('company.region'), '지역'],
+      ['position', '채용포지션'],
+      ['compensation', '채용보상금'],
+      ['skill', '사용기술'],
+    ],
+    include: {
+      model: Company,
+      as: 'company',
+      attributes: [],
+    },
+  });
+};
+
+const readJobPostingsByKeyword = async keyword => {
+  //console.log('검색 키워드 있음 확인');
   return await JobPosting.findAll({
     attributes: [
       ['id', '채용공고_id'],
@@ -103,6 +124,7 @@ module.exports = {
   createJobPosting,
   updateJobPosting,
   deleteJobPosting,
+  readJobPostingsByKeyword,
   readJobPostings,
   readJobPostingDetailByPostingid,
   readJobPostingsByCompanyId,

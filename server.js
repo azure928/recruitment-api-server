@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
   res.json({ message: 'Welcome to my application.' });
 });
 
-const PORT = process.env.PORT || 10010;
+const PORT = process.env.PORT || 10000;
 const server = http.createServer(app);
 
 server.listen(PORT, () => {
