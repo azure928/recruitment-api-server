@@ -62,7 +62,9 @@ const deleteJobPosting = async (req, res) => {
 
 const readJobPostings = async (req, res) => {
   try {
-    const data = await jobRepo.readJobPostings();
+    const keyword = req.query.keyword;
+
+    const data = await jobRepo.readJobPostings(keyword);
 
     //console.log('data : ', data);
 

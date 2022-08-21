@@ -4,6 +4,8 @@ const User = db.user;
 const Company = db.company;
 const SQ = require('sequelize');
 const Sequelize = SQ.Sequelize;
+const sequelize = require('sequelize');
+const Op = sequelize.Op;
 
 const createJobPosting = async (
   company_id,
@@ -51,7 +53,7 @@ const deleteJobPosting = async job_posting_id => {
   });
 };
 
-const readJobPostings = async job_posting_id => {
+const readJobPostings = async keyword => {
   return await JobPosting.findAll({
     attributes: [
       ['id', '채용공고_id'],
@@ -66,6 +68,9 @@ const readJobPostings = async job_posting_id => {
       model: Company,
       as: 'company',
       attributes: [],
+      where: {
+        company_name: { [Op.like]: '%' + keyword + '%' },
+      },
     },
   });
 };
