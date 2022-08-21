@@ -73,9 +73,26 @@ const readJobPostings = async (req, res) => {
   }
 };
 
+const readJobPostingDetail = async (req, res) => {
+  try {
+    const job_posting_id = req.params.job_posting_id;
+    console.log('req.prams 확인 : ', req.prams);
+
+    const data = await jobRepo.readJobPostingDetail(job_posting_id);
+
+    console.log('data : ', data);
+
+    res.status(200).json(data);
+  } catch (error) {
+    console.log(error.message);
+    res.status(error.statusCode || 500).json({ message: 'FAIL' });
+  }
+};
+
 module.exports = {
   createJobPosting,
   updateJobPosting,
   deleteJobPosting,
   readJobPostings,
+  readJobPostingDetail,
 };
