@@ -1,7 +1,6 @@
 const db = require('../models/index');
 const JobPosting = db.job_posting;
 const User = db.user;
-const ApplyList = db.apply_list;
 const Company = db.company;
 const SQ = require('sequelize');
 const Sequelize = SQ.Sequelize;
