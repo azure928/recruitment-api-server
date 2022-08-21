@@ -11,6 +11,6 @@ router.delete('/jobpostings/:job_posting_id', jobServices.deleteJobPosting);
 // 채용공고 목록 (검색)
 router.get('/jobpostings', jobServices.readJobPostings);
 // 채용공고 상세 페이지
-router.get('/jobpostings/:job_posting_id', jobServices.readJobPostingDetail);
+router.get('/jobpostings/:job_posting_id', jobServices.readJobPostingDetailByPostingid);
 
 module.exports = router;

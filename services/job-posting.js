@@ -1,4 +1,4 @@
-const jobRepo = require('../repos/job-posting');
+const jobRepo = require("../repos/job-posting");
 
 const createJobPosting = async (req, res) => {
   try {
@@ -13,10 +13,10 @@ const createJobPosting = async (req, res) => {
       skill
     );
 
-    res.status(201).json({ message: 'SUCCESS' });
+    res.status(201).json({ message: "SUCCESS" });
   } catch (error) {
     console.log(error.message);
-    res.status(error.statusCode || 500).json({ message: 'FAIL' });
+    res.status(error.statusCode || 500).json({ message: "FAIL" });
   }
 };
 
@@ -35,28 +35,28 @@ const updateJobPosting = async (req, res) => {
       skill
     );
 
-    console.log('result : ', result);
+    console.log("result : ", result);
 
-    res.status(200).json({ message: 'SUCCESS' });
+    res.status(200).json({ message: "SUCCESS" });
   } catch (error) {
     console.log(error.message);
-    res.status(error.statusCode || 500).json({ message: 'FAIL' });
+    res.status(error.statusCode || 500).json({ message: "FAIL" });
   }
 };
 
 const deleteJobPosting = async (req, res) => {
   try {
     const job_posting_id = req.params.job_posting_id;
-    console.log('req.prams 확인 : ', req.prams);
+    console.log("req.prams 확인 : ", req.prams);
 
     const result = await jobRepo.deleteJobPosting(job_posting_id);
 
-    console.log('result : ', result);
+    console.log("result : ", result);
 
-    res.status(200).json({ message: 'SUCCESS' });
+    res.status(200).json({ message: "SUCCESS" });
   } catch (error) {
     console.log(error.message);
-    res.status(error.statusCode || 500).json({ message: 'FAIL' });
+    res.status(error.statusCode || 500).json({ message: "FAIL" });
   }
 };
 
@@ -71,23 +71,49 @@ const readJobPostings = async (req, res) => {
     res.status(200).json(data);
   } catch (error) {
     console.log(error.message);
-    res.status(error.statusCode || 500).json({ message: 'FAIL' });
+    res.status(error.statusCode || 500).json({ message: "FAIL" });
   }
 };
 
-const readJobPostingDetail = async (req, res) => {
+const readJobPostingDetailByPostingid = async (req, res) => {
   try {
     const job_posting_id = req.params.job_posting_id;
-    console.log('req.prams 확인 : ', req.prams);
+    //console.log("req.prams 확인!!! ", req.params);
 
-    const data = await jobRepo.readJobPostingDetail(job_posting_id);
+    const selectedJobPosting = await jobRepo.readJobPostingDetailByPostingid(
+      job_posting_id
+    );
+    //console.log('selectedJobPosting : ', selectedJobPosting);
 
-    console.log('data : ', data);
+    
+    const otherJobPostings = await jobRepo.readJobPostingsByCompanyId(
+      selectedJobPosting.company.id,
+      job_posting_id
+    );
+    //console.log('otherJobPostings 확인!!!!!!! ', otherJobPostings);
 
-    res.status(200).json(data);
+    const otherJobPostingsIdArr = otherJobPostings.map(obj=>obj.id);
+
+    //console.log('otherJobPostingsIdArr 확인!!!', otherJobPostingsIdArr );
+
+    const result = {
+      '채용공고_id' : selectedJobPosting.id,
+      '회사명': selectedJobPosting.company.company_name,
+      '국가': selectedJobPosting.company.country,
+      '지역': selectedJobPosting.company.region,
+      '채용포지션': selectedJobPosting.position,
+      '채용보상금': selectedJobPosting.compensation,
+      '사용기술': selectedJobPosting.skill,
+      '채용내용': selectedJobPosting.content,
+      '회사가올린다른채용공고': otherJobPostingsIdArr
+    };
+
+    //console.log('result 확인 !!!!!!!!', result);
+
+    res.status(200).json(result);
   } catch (error) {
     console.log(error.message);
-    res.status(error.statusCode || 500).json({ message: 'FAIL' });
+    res.status(error.statusCode || 500).json({ message: "FAIL" });
   }
 };
 
@@ -96,5 +122,5 @@ module.exports = {
   updateJobPosting,
   deleteJobPosting,
   readJobPostings,
-  readJobPostingDetail,
+  readJobPostingDetailByPostingid,
 };

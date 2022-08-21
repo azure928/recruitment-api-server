@@ -75,22 +75,13 @@ const readJobPostings = async keyword => {
   });
 };
 
-const readJobPostingDetail = async job_posting_id => {
+const readJobPostingDetailByPostingid = async job_posting_id => {
   return await JobPosting.findOne({
-    attributes: [
-      ['id', '채용공고_id'],
-      [Sequelize.col('company.company_name'), '회사명'],
-      [Sequelize.col('company.country'), '국가'],
-      [Sequelize.col('company.region'), '지역'],
-      ['position', '채용포지션'],
-      ['compensation', '채용보상금'],
-      ['skill', '사용기술'],
-      ['content', '채용내용'],
-    ],
+    attributes: ['id', 'position','compensation','content', 'skill'],
     include: {
       model: Company,
       as: 'company',
-      attributes: [],
+      attributes: ['id','company_name','country','region'],
     },
     where: {
       id: job_posting_id,
@@ -98,10 +89,21 @@ const readJobPostingDetail = async job_posting_id => {
   });
 };
 
+async function readJobPostingsByCompanyId(company_id, job_posting_id) {
+  return await JobPosting.findAll({
+    attributes: ['id'],
+    where: {
+      company_id: company_id,
+      id: { [Op.not]: job_posting_id },
+    },
+  });
+}
+
 module.exports = {
   createJobPosting,
   updateJobPosting,
   deleteJobPosting,
   readJobPostings,
-  readJobPostingDetail,
+  readJobPostingDetailByPostingid,
+  readJobPostingsByCompanyId,
 };
