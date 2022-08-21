@@ -1,6 +1,7 @@
 # wanted pre onboarding backend course 선발과제
 
 ## 과제안내 
+- 과제 안내 페이지 : https://bow-hair-db3.notion.site/4-82b986ae35454252a3a950f54e57af9b
 - 아래 서비스 개요 및 요구사항을 만족하는 API 서버를 구현합니다.
 - 사용가능  기술: **Django, Node.js 중 1개의 기술**
 (본 과제 수행 프레임워크는 추후 코스 팀 구성에 활용 됩니다.)
@@ -14,6 +15,14 @@
 https://dbdiagram.io/d/630040f9f1a9b01b0fa9456d
 
 ![DB Modeling](https://i.imgur.com/jaRkMmQ.png)
+- 회사 테이블 : company
+- 사용자 테이블 : user
+- 채용공고 테이블 : job_posting
+- 지원내역 테이블 : apply_list  
+('사용자는 1회만 지원 가능합니다.'라는 조건이 있기 때문에
+apply_list 테이블의 job_posting_id와 user_id의 조합을 복합 Unique Key로 설정해 두었습니다. )
+    
+
 
 ## 적용 기술 
 - 사용언어 : Javascript
@@ -22,10 +31,13 @@ https://dbdiagram.io/d/630040f9f1a9b01b0fa9456d
 - ORM : Sequelize
 - 데이터베이스 : MySQL
 
-## 구현 기능
+
+
+## 요구사항 구현 설명
 ### 1. 채용공고 등록
+- body 값으로 데이터를 받아 job_posting 테이블에 등록합니다. 등록 완료 시 201 코드를 반환합니다.
 - **Method** : POST
-- **URL** : /jobpostings
+- **URI** : /jobpostings
 - **Requset** 
 ```
 body:
@@ -39,12 +51,14 @@ body:
 ```
 - **Response**
 ```
-
+{
+    "message": "SUCCESS"
+}
 ```
 
 ### 2. 채용공고 수정
 - **Method** : PUT
-- **URL** : /jobpostings/:job_posting_id
+- **URI** : /jobpostings/:job_posting_id
 - **Requset** 
 ```
 body:
@@ -57,27 +71,34 @@ body:
 ```
 - **Response**
 ```
-
+{
+    "message": "SUCCESS"
+}
 ```
 
 
 ### 3. 채용공고 삭제
+- params로 job_posting_id를 받아 해당하는 공고를 job_posting 테이블에서 삭제합니다.
 - **Method** : DELETE
-- **URL** : /jobpostings/:job_posting_id
+- **URI** : /jobpostings/:job_posting_id
 - **Requset** 
 ```
-param:
+params:
 {
     "job_posting_id"
 }
 ```
 - **Response**
 ```
+{
+    "message": "SUCCESS"
+}
 ```
 
 ### 4-1, 4-2. 채용공고 목록, 검색
+- Query String으로 keyword를 받아 회사명으로 필터링 되도록 구현했습니다. keyword가 없을 시 전체 목록을 불러옵니다. 
 - **Method** : GET
-- **URL** : jobpostings?keyword=원티드
+- **URI** : jobpostings?keyword=원티드
 - **Requset** 
 ```
 query:
@@ -87,13 +108,35 @@ query:
 ```
 - **Response**
 ```
+[
+    {
+        "채용공고_id": 7,
+        "회사명": "원티드랩",
+        "국가": "한국",
+        "지역": "서울",
+        "채용포지션": "백엔드 주니어 개발자",
+        "채용보상금": "1500000",
+        "사용기술": "Python, Django"
+    },
+    {
+        "채용공고_id": 10,
+        "회사명": "원티드코리아",
+        "국가": "한국",
+        "지역": "부산",
+        "채용포지션": "프론트엔드 개발자",
+        "채용보상금": "500000",
+        "사용기술": "React, Javascript "
+    }
+]
 ```
 ### 5. 채용 상세 페이지
+- params로 job_posting_id를 받고, job_posting 테이블과 company 테이블을 JOIN하여 회사명, 국가, 지역, 채용 내용도 같이 불러오도록 구현했으며,
+해당 공고의 company_id를 이용해 해당 회사가 올린 다른 채용공고도 추가적으로 불러오도록 구현하였습니다.
 - **Method** : GET
-- **URL** : /jobpostings/:job_posting_id
+- **URI** : /jobpostings/:job_posting_id
 - **Requset** 
 ```
-param:
+params:
 {
     "job_posting_id"
 }
@@ -113,8 +156,10 @@ param:
 }
 ```
 ### 6. 채용공고 지원 
+- '사용자는 1회만 지원 가능합니다.'라는 조건이 있기 때문에 body 값으로 받은 user_id와 job_posting_id를 이용하여 apply_list 테이블에 해당 데이터가 있는지 확인 후, 
+이미 존재할 경우에는 "already exists"라는 메시지를 돌려주고, 없을 경우에만 create 할 수 있도록 구현했습니다.
 - **Method** : POST
-- **URL** : /apply
+- **URI** : /apply
 - **Requset** 
 ```
 body:
@@ -125,4 +170,12 @@ body:
 ```
 - **Response**
 ```
+{
+    "message": "SUCCESS"
+}
+
+이미 지원했을 경우
+{
+    "message": "already exists"
+}
 ```
