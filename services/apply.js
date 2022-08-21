@@ -16,7 +16,7 @@ const createApply = async (req, res) => {
       return res.status(409).json({ message: 'already exists' });
     } else {
       await applyRepo.createApply(job_posting_id, user_id);
-      return res.status(200).json({ message: 'SUCCESS' });
+      return res.status(201).json({ message: 'SUCCESS' });
     }
   } catch (error) {
     console.log('에러 메세지 확인 : ', error.message);
