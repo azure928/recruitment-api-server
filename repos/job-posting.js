@@ -73,30 +73,6 @@ async function readJobPostings() {
   });
 }
 
-/*
-const readJobPostingsByKeyword = async keyword => {
-  //console.log('검색 키워드 있음 확인');
-  return await JobPosting.findAll({
-    attributes: [
-      ['id', '채용공고_id'],
-      [Sequelize.col('company.company_name'), '회사명'],
-      [Sequelize.col('company.country'), '국가'],
-      [Sequelize.col('company.region'), '지역'],
-      ['position', '채용포지션'],
-      ['compensation', '채용보상금'],
-      ['skill', '사용기술'],
-    ],
-    include: {
-      model: Company,
-      as: 'company',
-      attributes: [],
-      where: {
-        company_name: { [Op.like]: '%' + keyword + '%' },
-      },
-    },
-  });
-};*/
-
 const readJobPostingsByKeyword = async keyword => {
   //console.log('검색 키워드 있음 확인');
   return await JobPosting.findAll({
@@ -129,7 +105,17 @@ const readJobPostingsByKeyword = async keyword => {
           },
         },
         {
+          "$company.country$": {
+            [Op.like]: "%" + keyword + "%",
+          },
+        },
+        {
           skill: {
+            [Op.like]: "%" + keyword + "%",
+          },
+        },
+        {
+          position: {
             [Op.like]: "%" + keyword + "%",
           },
         },
