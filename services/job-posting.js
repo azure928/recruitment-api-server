@@ -60,15 +60,24 @@ const deleteJobPosting = async (req, res) => {
   }
 };
 
-const readJobPostings = async (req, res) => {
+async function readJobPostings(req, res) {
   try {
     const keyword = req.query.keyword;
+    console.log('키워드 확인!!', keyword);
 
-    const data = await jobRepo.readJobPostings(keyword);
+    let selectedJobPostingLists;
 
+    if(keyword) {
+      //console.log('검색 키워드 있음');
+      selectedJobPostingLists = await jobRepo.readJobPostingsByKeyword(keyword);
+    } else {
+      //console.log('검색 키워드 없음');
+      selectedJobPostingLists = await jobRepo.readJobPostings();
+    }
+ 
     //console.log('data : ', data);
 
-    res.status(200).json(data);
+    res.status(200).json(selectedJobPostingLists);
   } catch (error) {
     console.log(error.message);
     res.status(error.statusCode || 500).json({ message: "FAIL" });
