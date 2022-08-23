@@ -149,6 +149,15 @@ async function readJobPostingsByCompanyId(company_id, job_posting_id) {
   });
 }
 
+async function readJobPostingByJobPostingId(job_posting_id) {
+  return await JobPosting.findOne({
+    attributes: ["id"],
+    where: {
+      id: job_posting_id,
+    },
+  });
+}
+
 module.exports = {
   createJobPosting,
   updateJobPosting,
@@ -157,4 +166,5 @@ module.exports = {
   readJobPostings,
   readJobPostingDetailByPostingid,
   readJobPostingsByCompanyId,
+  readJobPostingByJobPostingId,
 };
