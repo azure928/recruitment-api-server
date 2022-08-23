@@ -110,38 +110,44 @@ async function readJobPostings(req, res) {
 const readJobPostingDetailByPostingid = async (req, res) => {
   try {
     const job_posting_id = req.params.job_posting_id;
-    //console.log("req.prams 확인!!! ", req.params);
+    console.log("req.params 확인!!! ", req.params);
 
     const selectedJobPosting = await jobRepo.readJobPostingDetailByPostingid(
       job_posting_id
     );
     //console.log('selectedJobPosting : ', selectedJobPosting);
 
-    const otherJobPostings = await jobRepo.readJobPostingsByCompanyId(
-      selectedJobPosting.company.id,
-      job_posting_id
-    );
-    //console.log('otherJobPostings 확인!!!!!!! ', otherJobPostings);
+    if (selectedJobPosting) {
+      const otherJobPostings = await jobRepo.readJobPostingsByCompanyId(
+        selectedJobPosting.company.id,
+        job_posting_id
+      );
+      //console.log('otherJobPostings 확인!!!!!!! ', otherJobPostings);
 
-    const otherJobPostingsIdArr = otherJobPostings.map(obj => obj.id);
+      const otherJobPostingsIdArr = otherJobPostings.map(obj => obj.id);
 
-    //console.log('otherJobPostingsIdArr 확인!!!', otherJobPostingsIdArr );
+      //console.log('otherJobPostingsIdArr 확인!!!', otherJobPostingsIdArr );
 
-    const result = {
-      채용공고_id: selectedJobPosting.id,
-      회사명: selectedJobPosting.company.company_name,
-      국가: selectedJobPosting.company.country,
-      지역: selectedJobPosting.company.region,
-      채용포지션: selectedJobPosting.position,
-      채용보상금: selectedJobPosting.compensation,
-      사용기술: selectedJobPosting.skill,
-      채용내용: selectedJobPosting.content,
-      회사가올린다른채용공고: otherJobPostingsIdArr,
-    };
+      const result = {
+        채용공고_id: selectedJobPosting.id,
+        회사명: selectedJobPosting.company.company_name,
+        국가: selectedJobPosting.company.country,
+        지역: selectedJobPosting.company.region,
+        채용포지션: selectedJobPosting.position,
+        채용보상금: selectedJobPosting.compensation,
+        사용기술: selectedJobPosting.skill,
+        채용내용: selectedJobPosting.content,
+        회사가올린다른채용공고: otherJobPostingsIdArr,
+      };
 
-    //console.log('result 확인 !!!!!!!!', result);
+      //console.log('result 확인 !!!!!!!!', result);
 
-    res.status(200).json(result);
+      res.status(200).json(result);
+    } else {
+      return res
+        .status(404)
+        .json({ message: "해당 공고가 존재하지 않습니다." });
+    }
   } catch (error) {
     console.log(error.message);
     res.status(error.statusCode || 500).json({ message: "FAIL" });
