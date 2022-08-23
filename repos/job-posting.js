@@ -85,14 +85,43 @@ const readJobPostingsByKeyword = async keyword => {
       ["compensation", "채용보상금"],
       ["skill", "사용기술"],
     ],
-    include: {
-      model: Company,
-      as: "company",
-      attributes: [],
-      where: {
-        company_name: { [Op.like]: "%" + keyword + "%" },
+    include: [
+      {
+        model: Company,
+        as: "company",
+        attributes: [],
       },
+    ],
+    where: {
+      [Op.or]: [
+        {
+          "$company.company_name$": {
+            [Op.like]: "%" + keyword + "%",
+          },
+        },
+        {
+          "$company.region$": {
+            [Op.like]: "%" + keyword + "%",
+          },
+        },
+        {
+          "$company.country$": {
+            [Op.like]: "%" + keyword + "%",
+          },
+        },
+        {
+          skill: {
+            [Op.like]: "%" + keyword + "%",
+          },
+        },
+        {
+          position: {
+            [Op.like]: "%" + keyword + "%",
+          },
+        },
+      ],
     },
+    order: [["id", "ASC"]],
   });
 };
 
