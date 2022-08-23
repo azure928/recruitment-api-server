@@ -1,5 +1,7 @@
 # wanted pre onboarding backend course 선발과제
 
+> 이 레포지토리는 원티드 프리온보딩 백엔드 코스 선발 과제를 위해 만들어졌습니다.
+
 ## 📢 과제 안내
 
 - 과제 안내 페이지 : https://bow-hair-db3.notion.site/4-82b986ae35454252a3a950f54e57af9b
@@ -65,6 +67,8 @@ body:
 }
 ```
 
+<br/>
+
 ### 2. 채용공고 수정
 
 - **Method** : PUT
@@ -89,6 +93,8 @@ body:
 }
 ```
 
+<br/>
+
 ### 3. 채용공고 삭제
 
 - params로 job_posting_id를 받아 해당하는 공고를 job_posting 테이블에서 삭제합니다.
@@ -111,7 +117,11 @@ params:
 }
 ```
 
-### 4-1, 4-2. 채용공고 목록, 검색
+<br/>
+
+### 4-1. 채용공고 목록
+
+### 4-2. 채용공고 검색 기능 **(선택사항 및 가산점요소)**
 
 - Query String으로 keyword를 받아 회사명, 국가, 지역, 채용 포지션, 사용 기술로 필터링 되도록 구현했습니다. keyword가 없을 시 전체 목록을 불러옵니다.
 - **Method** : GET
@@ -150,10 +160,12 @@ query:
 ]
 ```
 
+<br/>
+
 ### 5. 채용 상세 페이지
 
-- params로 job_posting_id를 받고, job_posting 테이블과 company 테이블을 JOIN하여 회사명, 국가, 지역, 채용 내용도 같이 불러오도록 구현했으며,
-  해당 공고의 company_id를 이용해 해당 회사가 올린 다른 채용공고도 추가적으로 불러오도록 구현하였습니다.
+- params로 job_posting_id를 받고, job_posting 테이블과 company 테이블을 JOIN하여 회사명, 국가, 지역, 채용 내용도 같이 불러오도록 구현했으며
+- 해당 공고의 company_id를 이용해 해당 회사가 올린 다른 채용공고도 추가적으로 불러오도록 구현하였습니다. \*\*(선택사항 및 가산점요소)
 - **Method** : GET
 - **URI** : /jobpostings/:job_posting_id
 - **Requset**
@@ -181,10 +193,12 @@ params:
 }
 ```
 
-### 6. 채용공고 지원
+<br/>
+
+### 6. 채용공고 지원 **(선택사항 및 가산점요소)**
 
 - '사용자는 1회만 지원 가능합니다.'라는 조건이 있기 때문에 body 값으로 받은 user_id와 job_posting_id를 이용하여 apply_list 테이블에 해당 데이터가 있는지 확인 후,
-  이미 존재할 경우에는 "already exists"라는 메시지를 돌려주고, 없을 경우에만 create 할 수 있도록 구현했습니다.
+  이미 존재할 경우에는 "already exists"라는 메시지를 돌려주고, 없을 경우에만 DB에 create 할 수 있도록 구현했습니다.
 - **Method** : POST
 - **URI** : /apply
 - **Requset**
