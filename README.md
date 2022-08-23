@@ -41,6 +41,8 @@ https://dbdiagram.io/d/630040f9f1a9b01b0fa9456d
 
 ## 📌 요구사항 구현 설명
 
+https://documenter.getpostman.com/view/21288917/VUqrNwix
+
 ### 1. 채용공고 등록
 
 - body 값으로 데이터를 받아 job_posting 테이블에 등록합니다. 등록 완료 시 201 코드를 반환합니다.
@@ -165,7 +167,7 @@ query:
 ### 5. 채용 상세 페이지
 
 - params로 job_posting_id를 받고, job_posting 테이블과 company 테이블을 JOIN하여 회사명, 국가, 지역, 채용 내용도 같이 불러오도록 구현했으며
-- 해당 공고의 company_id를 이용해 해당 회사가 올린 다른 채용공고도 추가적으로 불러오도록 구현하였습니다. \*\*(선택사항 및 가산점요소)
+- 해당 공고의 company_id를 이용해 해당 회사가 올린 다른 채용공고도 추가적으로 불러오도록 구현하였습니다. **(선택사항 및 가산점요소)**
 - **Method** : GET
 - **URI** : /jobpostings/:job_posting_id
 - **Requset**
