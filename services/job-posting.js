@@ -58,13 +58,25 @@ const updateJobPosting = async (req, res) => {
 const deleteJobPosting = async (req, res) => {
   try {
     const job_posting_id = req.params.job_posting_id;
-    console.log("req.prams 확인 : ", req.prams);
+    console.log("req.params 확인 : ", req.params);
 
-    const result = await jobRepo.deleteJobPosting(job_posting_id);
+    const selectedJobPosting = await jobRepo.readJobPostingByJobPostingId(
+      job_posting_id
+    );
 
-    console.log("result : ", result);
+    console.log("selectedJobPosting 확인 : ", selectedJobPosting);
 
-    res.status(200).json({ message: "SUCCESS" });
+    if (!selectedJobPosting) {
+      return res
+        .status(404)
+        .json({ message: "해당 공고는 존재하지 않습니다." });
+    } else {
+      const result = await jobRepo.deleteJobPosting(job_posting_id);
+
+      console.log("result : ", result);
+
+      res.status(200).json({ message: "SUCCESS" });
+    }
   } catch (error) {
     console.log(error.message);
     res.status(error.statusCode || 500).json({ message: "FAIL" });
