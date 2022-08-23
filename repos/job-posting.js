@@ -1,10 +1,10 @@
-const db = require('../models/index');
+const db = require("../models/index");
 const JobPosting = db.job_posting;
 const User = db.user;
 const Company = db.company;
-const SQ = require('sequelize');
+const SQ = require("sequelize");
 const Sequelize = SQ.Sequelize;
-const sequelize = require('sequelize');
+const sequelize = require("sequelize");
 const Op = sequelize.Op;
 
 const createJobPosting = async (
@@ -57,40 +57,40 @@ async function readJobPostings() {
   //console.log('검색 키워드 없음 확인');
   return await JobPosting.findAll({
     attributes: [
-      ['id', '채용공고_id'],
-      [Sequelize.col('company.company_name'), '회사명'],
-      [Sequelize.col('company.country'), '국가'],
-      [Sequelize.col('company.region'), '지역'],
-      ['position', '채용포지션'],
-      ['compensation', '채용보상금'],
-      ['skill', '사용기술'],
+      ["id", "채용공고_id"],
+      [Sequelize.col("company.company_name"), "회사명"],
+      [Sequelize.col("company.country"), "국가"],
+      [Sequelize.col("company.region"), "지역"],
+      ["position", "채용포지션"],
+      ["compensation", "채용보상금"],
+      ["skill", "사용기술"],
     ],
     include: {
       model: Company,
-      as: 'company',
+      as: "company",
       attributes: [],
     },
   });
-};
+}
 
 const readJobPostingsByKeyword = async keyword => {
   //console.log('검색 키워드 있음 확인');
   return await JobPosting.findAll({
     attributes: [
-      ['id', '채용공고_id'],
-      [Sequelize.col('company.company_name'), '회사명'],
-      [Sequelize.col('company.country'), '국가'],
-      [Sequelize.col('company.region'), '지역'],
-      ['position', '채용포지션'],
-      ['compensation', '채용보상금'],
-      ['skill', '사용기술'],
+      ["id", "채용공고_id"],
+      [Sequelize.col("company.company_name"), "회사명"],
+      [Sequelize.col("company.country"), "국가"],
+      [Sequelize.col("company.region"), "지역"],
+      ["position", "채용포지션"],
+      ["compensation", "채용보상금"],
+      ["skill", "사용기술"],
     ],
     include: {
       model: Company,
-      as: 'company',
+      as: "company",
       attributes: [],
       where: {
-        company_name: { [Op.like]: '%' + keyword + '%' },
+        company_name: { [Op.like]: "%" + keyword + "%" },
       },
     },
   });
@@ -98,11 +98,11 @@ const readJobPostingsByKeyword = async keyword => {
 
 const readJobPostingDetailByPostingid = async job_posting_id => {
   return await JobPosting.findOne({
-    attributes: ['id', 'position','compensation','content', 'skill'],
+    attributes: ["id", "position", "compensation", "content", "skill"],
     include: {
       model: Company,
-      as: 'company',
-      attributes: ['id','company_name','country','region'],
+      as: "company",
+      attributes: ["id", "company_name", "country", "region"],
     },
     where: {
       id: job_posting_id,
@@ -112,10 +112,19 @@ const readJobPostingDetailByPostingid = async job_posting_id => {
 
 async function readJobPostingsByCompanyId(company_id, job_posting_id) {
   return await JobPosting.findAll({
-    attributes: ['id'],
+    attributes: ["id"],
     where: {
       company_id: company_id,
       id: { [Op.not]: job_posting_id },
+    },
+  });
+}
+
+async function readJobPostingByJobPostingId(job_posting_id) {
+  return await JobPosting.findOne({
+    attributes: ["id"],
+    where: {
+      id: job_posting_id,
     },
   });
 }
@@ -128,4 +137,5 @@ module.exports = {
   readJobPostings,
   readJobPostingDetailByPostingid,
   readJobPostingsByCompanyId,
+  readJobPostingByJobPostingId,
 };
