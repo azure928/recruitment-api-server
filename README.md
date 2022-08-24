@@ -103,7 +103,7 @@
 // 공고가 존재하지 않을 경우
 // res.status : 404 Not Found
 {
-  "message": "SUCCESS"
+  "message": "해당 공고는 존재하지 않습니다."
 }
 ```
 
