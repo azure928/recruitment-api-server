@@ -200,6 +200,6 @@ dist
 *.code-workspace
 
 config.json
-orm.js
+//orm.js
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,visualstudiocode,node

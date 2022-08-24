@@ -52,21 +52,23 @@
 - **Requset**
 
 ```json
-body:
+// req.body :
 {
-  "company_id" : "1",
-  "position" : "백엔드 주니어 개발자",
-  "compensation" : "1000000",
-  "content" : "원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은.",
-  "skill" : "express"
+  "company_id": "1",
+  "position": "백엔드 주니어 개발자",
+  "compensation": "1000000",
+  "content": "원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은.",
+  "skill": "express"
 }
 ```
 
 - **Response**
 
-```
+```json
+// 성공시
+// res.status : 201 Created
 {
-    "message": "SUCCESS"
+  "message": "SUCCESS"
 }
 ```
 
@@ -79,18 +81,27 @@ body:
 - **Requset**
 
 ```json
-body:
+// req.body :
 {
-  "position" : "백엔드 주니어 개발자",
-  "compensation" : "1500000",
-  "content" : "원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은.",
-  "skill" : "express"
+  "position": "백엔드 주니어 개발자",
+  "compensation": "1500000",
+  "content": "원티드랩에서 백엔드 주니어 개발자를 채용합니다. 자격요건은.",
+  "skill": "express"
 }
 ```
 
 - **Response**
 
 ```json
+
+//성공시
+// res.status : 200 OK
+{
+  "message": "SUCCESS"
+}
+
+// 공고가 존재하지 않을 경우
+// res.status : 404 Not Found
 {
   "message": "SUCCESS"
 }
@@ -106,17 +117,26 @@ body:
 - **Requset**
 
 ```json
-params:
+// req.params :
 {
-    "job_posting_id"
+  "job_posting_id": "1"
 }
 ```
 
 - **Response**
 
 ```json
+
+//성공시
+// res.status : 200 OK
 {
   "message": "SUCCESS"
+}
+
+// 공고가 존재하지 않을 경우
+// res.status : 404 Not Found
+{
+  "message": "해당 공고가 존재하지 않습니다."
 }
 ```
 
@@ -132,15 +152,17 @@ params:
 - **Requset**
 
 ```json
-query:
+// req.query:
 {
-    "keword":<optional>
+    "keword": "원티드" <optional>
 }
 ```
 
 - **Response**
 
 ```json
+// 성공시
+// res.status : 200 OK
 [
   {
     "채용공고_id": 7,
@@ -161,6 +183,9 @@ query:
     "사용기술": "React, Javascript "
   }
 ]
+
+// 등록된 공고가 하나도 없거나 키워드로 검색된 공고가 없을 경우
+// res.status : 204 No Content
 ```
 
 <br/>
@@ -174,15 +199,17 @@ query:
 - **Requset**
 
 ```json
-params:
+// req.params :
 {
-    "job_posting_id"
+  "job_posting_id": "1"
 }
 ```
 
 - **Response**
 
 ```json
+// 성공시
+// res.status : 200 OK
 {
   "채용공고_id": 7,
   "회사명": "원티드랩",
@@ -193,6 +220,12 @@ params:
   "사용기술": "Python, Django",
   "채용내용": "원티드랩에서 백엔드 주니어 개발자를 적극 채용합니다. 자격요건은..",
   "회사가올린다른채용공고": [11, 12]
+}
+
+// 공고가 존재하지 않을 경우
+// res.status : 404 Not Found
+{
+  "message": "해당 공고가 존재하지 않습니다."
 }
 ```
 
@@ -207,23 +240,32 @@ params:
 - **Requset**
 
 ```json
-body:
+//req.body :
 {
-    "user_id": 2,
-    "job_posting_id": 8
+  "user_id": 2,
+  "job_posting_id": 8
 }
 ```
 
 - **Response**
 
 ```json
+// 성공시
+// res.status : 201 Created
 {
     "message": "SUCCESS"
 }
 
-이미 지원했을 경우
+// 이미 지원했을 경우
+// res.status : 409 Conflict
 {
-    "message": "already exists"
+  "message": "already exists"
+}
+
+// 공고가 존재하지 않을 경우
+// res.status : 404 Not Found
+{
+  "message": "해당 공고가 존재하지 않습니다."
 }
 ```
 

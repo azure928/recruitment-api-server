@@ -24,7 +24,7 @@ const updateJobPosting = async (req, res) => {
   try {
     const job_posting_id = req.params.job_posting_id;
     const { position, compensation, content, skill } = req.body;
-    //console.log('req.prams 확인 : ', req.prams);
+    console.log("req.params 확인 : ", req.params);
     //console.log('req.body 확인 : ', req.body);
 
     const selectedJobPosting = await jobRepo.readJobPostingByJobPostingId(
