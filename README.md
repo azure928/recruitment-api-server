@@ -1,21 +1,13 @@
-# wanted pre onboarding backend course 선발과제
+# Recruitment Service
 
-> 이 레포지토리는 원티드 프리온보딩 백엔드 코스 선발 과제를 위해 만들어졌습니다.
-> <br/><br/>
-
-## 📢 과제 안내
-
-- 과제 안내 페이지 : https://bow-hair-db3.notion.site/4-82b986ae35454252a3a950f54e57af9b
-- 아래 서비스 개요 및 요구사항을 만족하는 API 서버를 구현합니다.
-- 사용가능 기술: **Django, Node.js 중 1개의 기술**
-  (본 과제 수행 프레임워크는 추후 코스 팀 구성에 활용 됩니다.)
+<br>
 
 ## 📢 서비스 개요
 
 - 본 서비스는 기업의 채용을 위한 웹 서비스 입니다.
 - 회사는 채용공고를 생성하고, 이에 사용자는 지원합니다.
 
-<br/> <br/>
+<br/>
 
 ## 📌 DB Modeling
 

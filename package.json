@@ -1,7 +1,7 @@
 {
-  "name": "wanted_pre_onboarding",
+  "name": "recruitment-api-server",
   "version": "1.0.0",
-  "description": "wanted_pre_onboarding",
+  "description": "recruitment-api-server",
   "main": "index.js",
   "scripts": {
     "start": "nodemon server.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/azure928/wanted_pre_onboarding.git"
+    "url": "git+https://github.com/azure928/recruitment-api-server.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/azure928/wanted_pre_onboarding/issues"
+    "url": "https://github.com/azure928/recruitment-api-server/issues"
   },
-  "homepage": "https://github.com/azure928/wanted_pre_onboarding#readme",
+  "homepage": "https://github.com/azure928/recruitment-api-server#readme",
   "devDependencies": {
     "eslint": "^8.22.0",
     "eslint-config-prettier": "^8.5.0",
